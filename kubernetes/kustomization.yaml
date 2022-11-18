@@ -9,4 +9,4 @@ resources:
 - psp.yaml
 images:
 - name: ghcr.io/adorsys/ops-k8s-helloworld
-  newTag: "9308697"
+  newTag: 3fcae72
