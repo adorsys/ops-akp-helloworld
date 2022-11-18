@@ -37,6 +37,10 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Set hash
+      id: vars
+      run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
     - name: Check outputs
       run: echo ${{ steps.vars.outputs.sha_short }}
 
@@ -48,3 +52,11 @@ jobs:
         tags: ${{ env.REGISTRY }}/${{ github.repository }}:${{ steps.vars.outputs.sha_short }}
         build-args: VERSION=${{ steps.vars.outputs.sha_short }}
         labels: BUILDDATE=${{ github.event.repository.updated_at}},VERSION=${{ steps.vars.outputs.sha_short }}
+
+    - name: Run kustomize
+      run: cd kubernetes; kustomize edit set image ghcr.io/adorsys/ops-k8s-helloworld:${{ steps.vars.outputs.sha_short }}
+
+    - uses: EndBug/add-and-commit@v9
+      with:
+        message: "ci: set image tag to ${{ steps.vars.outputs.sha_short }}"
+        push: true

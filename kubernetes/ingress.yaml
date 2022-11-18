@@ -1,0 +1,25 @@
+# https://kubernetes.io/docs/concepts/services-networking/ingress/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: helloworld
+  annotations:
+    kubernetes.io/tls-acme: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: helloworld.staging.adorsys.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: helloworld
+            port:
+              number: 8080
+  tls:
+  - hosts:
+    - helloworld.staging.adorsys.io
+    secretName: helloworld
+---
