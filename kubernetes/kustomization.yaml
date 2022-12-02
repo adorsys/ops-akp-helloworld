@@ -6,7 +6,6 @@ resources:
 - deployment.yaml
 - ingress.yaml
 - service.yaml
-- psp.yaml
 images:
 - name: ghcr.io/adorsys/ops-k8s-helloworld
   newTag: abc9ee4

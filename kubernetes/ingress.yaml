@@ -2,13 +2,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: helloworld
+  name: helloworld-github
   annotations:
     kubernetes.io/tls-acme: "true"
 spec:
   ingressClassName: nginx
   rules:
-  - host: helloworld.staging.adorsys.io
+  - host: helloworld-github.ops.adorsys.io
     http:
       paths:
       - path: /
@@ -20,6 +20,6 @@ spec:
               number: 8080
   tls:
   - hosts:
-    - helloworld.staging.adorsys.io
+    - helloworld-github.ops.adorsys.io
     secretName: helloworld
 ---
